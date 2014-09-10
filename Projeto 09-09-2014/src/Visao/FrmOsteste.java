@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class FrmOsteste extends javax.swing.JFrame {
     ConectaBanco conectaCliente = new ConectaBanco ();
+    ConectaBanco conectaTabelaPrecos = new ConectaBanco();
     
 
     /**
@@ -26,9 +27,11 @@ public class FrmOsteste extends javax.swing.JFrame {
     public FrmOsteste() {
         initComponents();
         conectaCliente.conexao();
+        conectaTabelaPrecos.conexao();
         jComboCliente.removeAllItems();
         jComboCliente.addItem(null);
-       
+        jComboPrecos.removeAllItems();
+        jComboPrecos.addItem(null);
     }
 
     /**
@@ -53,7 +56,7 @@ public class FrmOsteste extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jTextCategoria = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        jTextValor = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -63,7 +66,7 @@ public class FrmOsteste extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jComboCliente = new javax.swing.JComboBox();
-        jComboBox2 = new javax.swing.JComboBox();
+        jComboPrecos = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -158,7 +161,17 @@ public class FrmOsteste extends javax.swing.JFrame {
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboPrecos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboPrecos.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                jComboPrecosPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                jComboPrecosPopupMenuWillBecomeVisible(evt);
+            }
+        });
 
         jLabel7.setText("Serviço");
 
@@ -169,14 +182,14 @@ public class FrmOsteste extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextValor, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jComboPrecos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -260,11 +273,11 @@ public class FrmOsteste extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboPrecos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -335,6 +348,32 @@ public class FrmOsteste extends javax.swing.JFrame {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jComboPrecosPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboPrecosPopupMenuWillBecomeVisible
+        // TODO add your handling code here:
+        jComboPrecos.removeAllItems();
+        try {
+            conectaTabelaPrecos.executaSql("select * from precos order by nome");
+            conectaTabelaPrecos.rs.first();
+            do{
+               jComboPrecos.addItem(conectaTabelaPrecos.rs.getString("nome")); 
+            }while(conectaTabelaPrecos.rs.next());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"erro:\n"+ ex);
+        }
+    }//GEN-LAST:event_jComboPrecosPopupMenuWillBecomeVisible
+
+    private void jComboPrecosPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboPrecosPopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            conectaTabelaPrecos.executaSql("select * from precos where nome ='"+jComboPrecos.getSelectedItem()+"'");
+            conectaTabelaPrecos.rs.first();
+            jTextValor.setText(String.valueOf(conectaTabelaPrecos.rs.getFloat("valor")));
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmOsteste.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jComboPrecosPopupMenuWillBecomeInvisible
         /**
      * @param args the command line arguments
      */
@@ -379,8 +418,8 @@ public class FrmOsteste extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboCliente;
+    private javax.swing.JComboBox jComboPrecos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -394,7 +433,7 @@ public class FrmOsteste extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextPlaca;
+    private javax.swing.JTextField jTextValor;
     // End of variables declaration//GEN-END:variables
 }
