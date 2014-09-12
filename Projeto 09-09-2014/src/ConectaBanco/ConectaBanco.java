@@ -9,9 +9,10 @@ public class ConectaBanco
     public Statement stm;
     public ResultSet rs;
     private String  drive = "com.mysql.jdbc.Driver";
-    private String caminho = "jdbc:mysql://localhost:3306/banco";
-    private String usuario = "root";
-    private String senha = "";
+    //private String caminho = "jdbc:mysql://localhost:3306/banco";
+    private String caminho = "jdbc:mysql://db4free.net/banco";
+    private String usuario = "ferekelu"; //"ferekelu@php5"
+    private String senha = "FRkl159";
     public Connection conn;
     
     public void conexao()
