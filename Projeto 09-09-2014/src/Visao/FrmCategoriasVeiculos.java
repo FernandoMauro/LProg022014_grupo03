@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 
@@ -22,7 +23,7 @@ import javax.swing.ListSelectionModel;
  * @author Fernando
  */
 public class FrmCategoriasVeiculos extends javax.swing.JFrame {
-     ConectaBanco conecta = new ConectaBanco();
+     ConectaBanco conectaCategorias = new ConectaBanco();
      ConectaBanco conectaTipos = new ConectaBanco();
      Modelo.ModeloCategorias mod = new ModeloCategorias();
      ControleCategorias controle = new ControleCategorias();
@@ -31,20 +32,16 @@ public class FrmCategoriasVeiculos extends javax.swing.JFrame {
      */
     public FrmCategoriasVeiculos() {
         initComponents();
-        conecta.conexao();
+        conectaCategorias.conexao();
         conectaTipos.conexao();
         jComboTipos.removeAllItems();
         jButtonSalvar.setEnabled(false);
         try {
-            conectaTipos.executaSql("select * from tipos order by nome");
-            conectaTipos.rs.first();
-            do {
-                jComboTipos.addItem(conectaTipos.rs.getString("nome"));
-            } while (conectaTipos.rs.next());
-            conecta.executaSql("select * from categorias order by nome");
-            conecta.rs.first();
-            jTextId.setText(String.valueOf(conecta.rs.getInt("id")));
-            jTextNome.setText(conecta.rs.getString("nome"));
+            preencheCombo(jComboTipos);
+            conectaCategorias.executaSql("select * from categorias order by nome");
+            conectaCategorias.rs.first();
+            jTextId.setText(String.valueOf(conectaCategorias.rs.getInt("id")));
+            jTextNome.setText(conectaCategorias.rs.getString("nome"));
             preencherTabelaCategorias("select * from categorias order by nome");
              
          } catch (SQLException ex) {
@@ -321,9 +318,9 @@ public class FrmCategoriasVeiculos extends javax.swing.JFrame {
         mod.setNome(jTextNome.getText());
         controle.ExcluirCategorias(mod);
         try {
-            conecta.rs.first();
-            jTextId.setText(String.valueOf(conecta.rs.getInt("id")));
-            jTextNome.setText(conecta.rs.getString("nome"));
+            conectaCategorias.rs.first();
+            jTextId.setText(String.valueOf(conectaCategorias.rs.getInt("id")));
+            jTextNome.setText(conectaCategorias.rs.getString("nome"));
         } catch (SQLException ex) {
             //Logger.getLogger(FrmCategoriasVeiculos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -334,11 +331,11 @@ public class FrmCategoriasVeiculos extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         try {
-            conecta.executaSql("select * from categorias order by nome");
-            conecta.rs.first();
-            jTextId.setText(String.valueOf(conecta.rs.getInt("id")));
-            jTextNome.setText(conecta.rs.getString("nome"));
-            conectaTipos.executaSql("select * from tipos where id = "+ conecta.rs.getString("id_tipo"));
+            conectaCategorias.executaSql("select * from categorias order by nome");
+            conectaCategorias.rs.first();
+            jTextId.setText(String.valueOf(conectaCategorias.rs.getInt("id")));
+            jTextNome.setText(conectaCategorias.rs.getString("nome"));
+            conectaTipos.executaSql("select * from tipos where id = "+ conectaCategorias.rs.getString("id_tipo"));
             conectaTipos.rs.first();
             jComboTipos.setSelectedItem(conectaTipos.rs.getString("nome"));
 
@@ -352,10 +349,10 @@ public class FrmCategoriasVeiculos extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             //conecta.executaSql("select * from tipos order by id");
-            conecta.rs.previous();
-            jTextId.setText(String.valueOf(conecta.rs.getInt("id")));
-            jTextNome.setText(conecta.rs.getString("nome"));
-            conectaTipos.executaSql("select * from tipos where id = "+ conecta.rs.getString("id_tipo"));
+            conectaCategorias.rs.previous();
+            jTextId.setText(String.valueOf(conectaCategorias.rs.getInt("id")));
+            jTextNome.setText(conectaCategorias.rs.getString("nome"));
+            conectaTipos.executaSql("select * from tipos where id = "+ conectaCategorias.rs.getString("id_tipo"));
             conectaTipos.rs.first();
             jComboTipos.setSelectedItem(conectaTipos.rs.getString("nome"));
         } catch (SQLException ex) {
@@ -367,10 +364,10 @@ public class FrmCategoriasVeiculos extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             //conecta.executaSql("select * from tipos order by id");
-            conecta.rs.next();
-            jTextId.setText(String.valueOf(conecta.rs.getInt("id")));
-            jTextNome.setText(conecta.rs.getString("nome"));
-            conectaTipos.executaSql("select * from tipos where id = "+ conecta.rs.getString("id_tipo"));
+            conectaCategorias.rs.next();
+            jTextId.setText(String.valueOf(conectaCategorias.rs.getInt("id")));
+            jTextNome.setText(conectaCategorias.rs.getString("nome"));
+            conectaTipos.executaSql("select * from tipos where id = "+ conectaCategorias.rs.getString("id_tipo"));
             conectaTipos.rs.first();
             jComboTipos.setSelectedItem(conectaTipos.rs.getString("nome"));
         } catch (SQLException ex) {
@@ -381,11 +378,11 @@ public class FrmCategoriasVeiculos extends javax.swing.JFrame {
     private void jButtonUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUltimoActionPerformed
         // TODO add your handling code here:
         try {
-            conecta.executaSql("select * from categorias order by nome");
-            conecta.rs.last();
-            jTextId.setText(String.valueOf(conecta.rs.getInt("id")));
-            jTextNome.setText(conecta.rs.getString("nome"));
-            conectaTipos.executaSql("select * from tipos where id = "+ conecta.rs.getString("id_tipo"));
+            conectaCategorias.executaSql("select * from categorias order by nome");
+            conectaCategorias.rs.last();
+            jTextId.setText(String.valueOf(conectaCategorias.rs.getInt("id")));
+            jTextNome.setText(conectaCategorias.rs.getString("nome"));
+            conectaTipos.executaSql("select * from tipos where id = "+ conectaCategorias.rs.getString("id_tipo"));
             conectaTipos.rs.first();
             jComboTipos.setSelectedItem(conectaTipos.rs.getString("nome"));
         } catch (SQLException ex) {
@@ -408,18 +405,18 @@ public class FrmCategoriasVeiculos extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jTableCategoriasMouseClicked
 public void preencherTabelaCategorias(String SQL){
-        conecta.conexao();
+        conectaCategorias.conexao();
         ArrayList dados = new ArrayList();
         String[] colunas = new String[]{"ID","NOME","TIPO DE VEICULO"};
         
-        conecta.executaSql(SQL);
+        conectaCategorias.executaSql(SQL);
         try {
-            conecta.rs.first();
+            conectaCategorias.rs.first();
             do{
-                conectaTipos.executaSql("select * from tipos where id = "+conecta.rs.getInt("id_tipo"));
+                conectaTipos.executaSql("select * from tipos where id = "+conectaCategorias.rs.getInt("id_tipo"));
                 conectaTipos.rs.first();
-                dados.add(new Object[]{conecta.rs.getInt("id"),conecta.rs.getString("nome"),conectaTipos.rs.getString("nome")});
-            }while(conecta.rs.next());
+                dados.add(new Object[]{conectaCategorias.rs.getInt("id"),conectaCategorias.rs.getString("nome"),conectaTipos.rs.getString("nome")});
+            }while(conectaCategorias.rs.next());
         } catch (SQLException ex) {
             Logger.getLogger(FrmCategoriasVeiculos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -436,7 +433,25 @@ public void preencherTabelaCategorias(String SQL){
         jTableCategorias.setAutoResizeMode(jTableCategorias.AUTO_RESIZE_OFF);
         jTableCategorias.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
-    }   
+    }
+    public void preencheCombo(JComboBox combo) {
+        try {
+            conectaTipos.executaSql("select * from tipos order by nome");
+            conectaTipos.rs.first();
+            do {
+                combo.addItem(conectaTipos.rs.getString("nome"));
+            } while (conectaTipos.rs.next());
+
+            //conectaCategorias.executaSql("select * from categorias order by nome");
+            //conectaCategorias.rs.first();
+            //jTextId.setText(String.valueOf(conectaCategorias.rs.getInt("id")));
+            //jTextNome.setText(conectaCategorias.rs.getString("nome"));
+            //preencherTabelaCategorias("select * from categorias order by nome");
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Erro ao setar o primeiro registro! \nErro:" + ex);
+        }
+    }
     /**
      * @param args the command line arguments
      */

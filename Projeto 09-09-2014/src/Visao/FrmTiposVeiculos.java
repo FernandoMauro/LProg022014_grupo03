@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Visao;
 
 import ConectaBanco.ConectaBanco;
@@ -23,10 +22,10 @@ import javax.swing.ListSelectionModel;
  */
 public class FrmTiposVeiculos extends javax.swing.JFrame {
 
-     ConectaBanco conecta = new ConectaBanco();
-     Modelo.ModeloTipos mod = new ModeloTipos();
-     ControleTipos controle = new ControleTipos();
-     
+    ConectaBanco conecta = new ConectaBanco();
+    Modelo.ModeloTipos mod = new ModeloTipos();
+    ControleTipos controle = new ControleTipos();
+
     /**
      * Creates new form FrmTiposVeiculo
      */
@@ -34,17 +33,16 @@ public class FrmTiposVeiculos extends javax.swing.JFrame {
         initComponents();
         conecta.conexao();
         jButtonSalvar.setEnabled(false);
-        try {
-             conecta.executaSql("select * from tipos order by nome");
-             conecta.rs.first();
-             jTextId.setText(String.valueOf(conecta.rs.getInt("id")));
-             jTextNome.setText(conecta.rs.getString("nome"));
-             preencherTabelaTipos("select * from tipos order by nome");
-             
-         } catch (SQLException ex) {
-             JOptionPane.showMessageDialog(rootPane, "Erro ao setar o primeiro registro! \nErro:"+ex);
-         }
-         
+        //try {
+        //conecta.executaSql("select * from tipos order by nome");
+        //conecta.rs.first();
+        //jTextId.setText(String.valueOf(conecta.rs.getInt("id")));
+        //jTextNome.setText(conecta.rs.getString("nome"));
+        preencherTabelaTipos("select * from tipos order by nome");
+
+         //} catch (SQLException ex) {
+        //    JOptionPane.showMessageDialog(rootPane, "Erro ao setar o primeiro registro! \nErro:"+ex);
+        //}
     }
 
     /**
@@ -274,9 +272,9 @@ public class FrmTiposVeiculos extends javax.swing.JFrame {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         // TODO add your handling code here:
-        if(jTextNome.getText().equals("")){
+        if (jTextNome.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Todos os campos são Obrigatorios");
-            return ;
+            return;
         }
         mod.setNome(jTextNome.getText());
         controle.InserirTipos(mod);
@@ -288,56 +286,56 @@ public class FrmTiposVeiculos extends javax.swing.JFrame {
 
     private void jButtonInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInicioActionPerformed
         // TODO add your handling code here:
-        
-         try {
-             conecta.executaSql("select * from tipos order by nome");
-             conecta.rs.first();
-             jTextId.setText(String.valueOf(conecta.rs.getInt("id")));
-             jTextNome.setText(conecta.rs.getString("nome"));
-             
-         } catch (SQLException ex) {
-             JOptionPane.showMessageDialog(rootPane, "Erro ao setar o primeiro registro! \nErro:"+ex);
-         }
-        
+
+        try {
+            conecta.executaSql("select * from tipos order by nome");
+            conecta.rs.first();
+            jTextId.setText(String.valueOf(conecta.rs.getInt("id")));
+            jTextNome.setText(conecta.rs.getString("nome"));
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Erro ao setar o primeiro registro! \nErro:" + ex);
+        }
+
     }//GEN-LAST:event_jButtonInicioActionPerformed
 
     private void jButtonUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUltimoActionPerformed
         // TODO add your handling code here:
         try {
-             conecta.executaSql("select * from tipos order by nome");
-             conecta.rs.last();
-             jTextId.setText(String.valueOf(conecta.rs.getInt("id")));
-             jTextNome.setText(conecta.rs.getString("nome"));
-             
-         } catch (SQLException ex) {
-             JOptionPane.showMessageDialog(rootPane, "Erro ao setar o ultimo registro! \nErro:"+ex);
-         }
+            conecta.executaSql("select * from tipos order by nome");
+            conecta.rs.last();
+            jTextId.setText(String.valueOf(conecta.rs.getInt("id")));
+            jTextNome.setText(conecta.rs.getString("nome"));
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Erro ao setar o ultimo registro! \nErro:" + ex);
+        }
     }//GEN-LAST:event_jButtonUltimoActionPerformed
 
     private void jButtonAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnteriorActionPerformed
         // TODO add your handling code here:
         try {
-             //conecta.executaSql("select * from tipos order by id");
-             conecta.rs.previous();
-             jTextId.setText(String.valueOf(conecta.rs.getInt("id")));
-             jTextNome.setText(conecta.rs.getString("nome"));
-             
-         } catch (SQLException ex) {
-             //JOptionPane.showMessageDialog(rootPane, "Erro ao setar o registro! \nErro:"+ex);
-         }
+            //conecta.executaSql("select * from tipos order by id");
+            conecta.rs.previous();
+            jTextId.setText(String.valueOf(conecta.rs.getInt("id")));
+            jTextNome.setText(conecta.rs.getString("nome"));
+
+        } catch (SQLException ex) {
+            //JOptionPane.showMessageDialog(rootPane, "Erro ao setar o registro! \nErro:"+ex);
+        }
     }//GEN-LAST:event_jButtonAnteriorActionPerformed
 
     private void jButtonProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProximoActionPerformed
         // TODO add your handling code here:
         try {
-             //conecta.executaSql("select * from tipos order by id");
-             conecta.rs.next();
-             jTextId.setText(String.valueOf(conecta.rs.getInt("id")));
-             jTextNome.setText(conecta.rs.getString("nome"));
-             
-         } catch (SQLException ex) {
-             //JOptionPane.showMessageDialog(rootPane, "Erro ao setar o primeiro registro! \nErro:"+ex);
-         }
+            //conecta.executaSql("select * from tipos order by id");
+            conecta.rs.next();
+            jTextId.setText(String.valueOf(conecta.rs.getInt("id")));
+            jTextNome.setText(conecta.rs.getString("nome"));
+
+        } catch (SQLException ex) {
+            //JOptionPane.showMessageDialog(rootPane, "Erro ao setar o primeiro registro! \nErro:"+ex);
+        }
     }//GEN-LAST:event_jButtonProximoActionPerformed
 
     private void jButtonDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeletarActionPerformed
@@ -345,21 +343,21 @@ public class FrmTiposVeiculos extends javax.swing.JFrame {
         mod.setId(Integer.parseInt(jTextId.getText()));
         mod.setNome(jTextNome.getText());
         controle.ExcluirTipos(mod);
-         try {
-             conecta.rs.first();
-             jTextId.setText(String.valueOf(conecta.rs.getInt("id")));
-             jTextNome.setText(conecta.rs.getString("nome"));
-         } catch (SQLException ex) {
-             Logger.getLogger(FrmTiposVeiculos.class.getName()).log(Level.SEVERE, null, ex);
-         }
+        try {
+            conecta.rs.first();
+            jTextId.setText(String.valueOf(conecta.rs.getInt("id")));
+            jTextNome.setText(conecta.rs.getString("nome"));
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmTiposVeiculos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         preencherTabelaTipos("select * from tipos order by nome");
     }//GEN-LAST:event_jButtonDeletarActionPerformed
 
     private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarActionPerformed
         // TODO add your handling code here:
-        if(jTextNome.getText().equals("")){
+        if (jTextNome.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Todos os campos são Obrigatorios");
-            return ;
+            return;
         }
         mod.setId(Integer.parseInt(jTextId.getText()));
         mod.setNome(jTextNome.getText());
@@ -373,21 +371,21 @@ public class FrmTiposVeiculos extends javax.swing.JFrame {
         jTextId.setText(jTableTipos.getValueAt(linha, 0).toString());
         jTextNome.setText(jTableTipos.getValueAt(linha, 1).toString());
     }//GEN-LAST:event_jTableTiposMouseClicked
-    public void preencherTabelaTipos(String SQL){
+    public void preencherTabelaTipos(String SQL) {
         conecta.conexao();
         ArrayList dados = new ArrayList();
-        String[] colunas = new String[]{"ID","NOME"};
-        
+        String[] colunas = new String[]{"ID", "NOME"};
+
         conecta.executaSql(SQL);
         try {
             conecta.rs.first();
-            do{
-                dados.add(new Object[]{conecta.rs.getInt("id"),conecta.rs.getString("nome")});
-            }while(conecta.rs.next());
+            do {
+                dados.add(new Object[]{conecta.rs.getInt("id"), conecta.rs.getString("nome")});
+            } while (conecta.rs.next());
         } catch (SQLException ex) {
             Logger.getLogger(FrmTiposVeiculos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         ModeloTabela modelo = new ModeloTabela(dados, colunas);
         jTableTipos.setModel(modelo);
         jTableTipos.getColumnModel().getColumn(0).setPreferredWidth(50);
@@ -397,8 +395,9 @@ public class FrmTiposVeiculos extends javax.swing.JFrame {
         jTableTipos.getTableHeader().setReorderingAllowed(false);
         jTableTipos.setAutoResizeMode(jTableTipos.AUTO_RESIZE_OFF);
         jTableTipos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
-    }   
+
+    }
+
     /**
      * @param args the command line arguments
      */

@@ -19,8 +19,11 @@ import javax.swing.JOptionPane;
 public class ControleCategorias {
     ConectaBanco conectaCategorias= new ConectaBanco();
     
-    public void InserirCategorias(ModeloCategorias mod){
+    public void ControleCategorias(){
         conectaCategorias.conexao();
+    }
+    public void InserirCategorias(ModeloCategorias mod){
+        //conectaCategorias.conexao();
         try {
             PreparedStatement pst = conectaCategorias.conn.prepareStatement("insert into categorias(nome,id_tipo) values(?,?)");
             pst.setString(1, mod.getNome().toUpperCase());
@@ -33,7 +36,7 @@ public class ControleCategorias {
         conectaCategorias.desconectata();
     }
     public void ExcluirCategorias(ModeloCategorias mod){
-        conectaCategorias.conexao();
+        //conectaCategorias.conexao();
         try {
             PreparedStatement pst = conectaCategorias.conn.prepareStatement("delete from categorias where id = ?");
             pst.setInt(1, mod.getId());
@@ -42,10 +45,10 @@ public class ControleCategorias {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro na exclusão dos dados!\n Erro:"+ ex);
         }
-        conectaCategorias.desconectata();
+        //conectaCategorias.desconectata();
     }
     public void AlterarCategorias(ModeloCategorias mod){
-        conectaCategorias.conexao();
+        //conectaCategorias.conexao();
         try {
             PreparedStatement pst = conectaCategorias.conn.prepareStatement("update categorias set nome = ? , id_tipo = ? where id = ?");
             pst.setString(1, mod.getNome().toUpperCase());
@@ -56,4 +59,5 @@ public class ControleCategorias {
             JOptionPane.showMessageDialog(null, "Erro na alteração dos dados!\n Erro:"+ ex);
         }
     }
+    
 }
