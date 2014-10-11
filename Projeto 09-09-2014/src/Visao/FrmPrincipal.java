@@ -62,6 +62,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuCategorias = new javax.swing.JMenuItem();
         jMenuRelClientes = new javax.swing.JMenuItem();
+        jMenuTabPrecos = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
 
         jButton1.setText("jButton1");
@@ -181,6 +182,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu8.add(jMenuRelClientes);
+
+        jMenuTabPrecos.setText("Tabela de Preços");
+        jMenuTabPrecos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuTabPrecosActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuTabPrecos);
 
         jMenuBar1.add(jMenu8);
 
@@ -311,6 +320,21 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuRelClientesActionPerformed
 
+    private void jMenuTabPrecosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTabPrecosActionPerformed
+        // TODO add your handling code here:
+        try {
+            conecta.executaSql("SELECT * FROM PRECOS");
+            JRResultSetDataSource relatTipos = new JRResultSetDataSource(conecta.rs);
+            JasperPrint jpTipos = JasperFillManager.fillReport("src\\Relatorios\\tabelaPrecos.jasper", new HashMap(), relatTipos);
+            JasperViewer jv = new JasperViewer(jpTipos, false);
+            jv.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+            jv.setTitle("Relatório de Categorias de Veiculos");
+            jv.setVisible(true);
+        } catch (JRException es) {
+            JOptionPane.showMessageDialog(null, "Erro ao execultar o Relatório!\n ERRO :" + es);
+        }
+    }//GEN-LAST:event_jMenuTabPrecosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -369,6 +393,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuRelClientes;
+    private javax.swing.JMenuItem jMenuTabPrecos;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
