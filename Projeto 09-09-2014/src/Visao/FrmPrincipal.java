@@ -3,25 +3,32 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Visao;
 
 import ConectaBanco.ConectaBanco;
+import java.util.HashMap;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
- * 
+ *
  * @author Fernando
  */
 public class FrmPrincipal extends javax.swing.JFrame {
-    
+
     ConectaBanco conecta = new ConectaBanco();
+
     /**
      * Creates new form Principal
      */
     public FrmPrincipal() {
         initComponents();
         conecta.conexao();
-        
+
     }
 
     /**
@@ -53,6 +60,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu7 = new javax.swing.JMenu();
         jMenu8 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuCategorias = new javax.swing.JMenuItem();
+        jMenuRelClientes = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
 
         jButton1.setText("jButton1");
@@ -157,6 +166,22 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu8.add(jMenuItem6);
 
+        jMenuCategorias.setText("Categorias de Veiculos");
+        jMenuCategorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuCategoriasActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuCategorias);
+
+        jMenuRelClientes.setText("Clientes");
+        jMenuRelClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuRelClientesActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuRelClientes);
+
         jMenuBar1.add(jMenu8);
 
         jMenu9.setText("Sair");
@@ -237,8 +262,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
-        //JasperReport report = JasperCompileManager.compileReport("TabelaTipos.jrxml");  
-       
+        try {
+            conecta.executaSql("select * from tipos");
+            JRResultSetDataSource relatTipos = new JRResultSetDataSource(conecta.rs);
+            JasperPrint jpTipos = JasperFillManager.fillReport("src\\Relatorios\\tiposVeiculos.jasper", new HashMap(), relatTipos);
+            JasperViewer jv = new JasperViewer(jpTipos, false);
+            jv.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+            jv.setTitle("Relatório de Tipos de Veiculos");
+            jv.setVisible(true);
+        } catch (JRException es) {
+            JOptionPane.showMessageDialog(null, "Erro ao execultar o Relatório!\n ERRO :" + es);
+        }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
@@ -246,6 +280,36 @@ public class FrmPrincipal extends javax.swing.JFrame {
         FrmOS frm4 = new FrmOS();
         frm4.setVisible(true);
     }//GEN-LAST:event_jMenu2MouseClicked
+
+    private void jMenuCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCategoriasActionPerformed
+        // TODO add your handling code here:
+        try {
+            conecta.executaSql("SELECT categorias.id, categorias.nome, tipos.nome AS tipo FROM categorias INNER JOIN tipos ON categorias.id_tipo = tipos.id");
+            JRResultSetDataSource relatTipos = new JRResultSetDataSource(conecta.rs);
+            JasperPrint jpTipos = JasperFillManager.fillReport("src\\Relatorios\\categoriasVeiculos.jasper", new HashMap(), relatTipos);
+            JasperViewer jv = new JasperViewer(jpTipos, false);
+            jv.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+            jv.setTitle("Relatório de Categorias de Veiculos");
+            jv.setVisible(true);
+        } catch (JRException es) {
+            JOptionPane.showMessageDialog(null, "Erro ao execultar o Relatório!\n ERRO :" + es);
+        }
+    }//GEN-LAST:event_jMenuCategoriasActionPerformed
+
+    private void jMenuRelClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRelClientesActionPerformed
+        // TODO add your handling code here:
+        try {
+            conecta.executaSql("SELECT clientes.id, clientes.nome, concat(substring(clientes.placa,1,3),'-',substring(clientes.placa,4,7)) as placa, tipos.nome as tipo, categorias.nome as categoria FROM clientes INNER JOIN tipos ON clientes.tipo = tipos.id INNER JOIN categorias ON clientes.categoria = categorias.id ");
+            JRResultSetDataSource relatTipos = new JRResultSetDataSource(conecta.rs);
+            JasperPrint jpTipos = JasperFillManager.fillReport("src\\Relatorios\\clientes.jasper", new HashMap(), relatTipos);
+            JasperViewer jv = new JasperViewer(jpTipos, false);
+            jv.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
+            jv.setTitle("Relatório de Categorias de Veiculos");
+            jv.setVisible(true);
+        } catch (JRException es) {
+            JOptionPane.showMessageDialog(null, "Erro ao execultar o Relatório!\n ERRO :" + es);
+        }
+    }//GEN-LAST:event_jMenuRelClientesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,14 +361,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
+    private javax.swing.JMenuItem jMenuCategorias;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuRelClientes;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
-    
 }

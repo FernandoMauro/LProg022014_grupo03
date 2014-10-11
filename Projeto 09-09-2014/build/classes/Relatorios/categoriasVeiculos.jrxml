@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="categoriasVeiculos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e3f150f3-039d-408a-9421-8d1edeea6e10">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     categorias.id,
+     categorias.nome,
+     tipos.nome AS tipo
+FROM
+     categorias
+INNER JOIN
+tipos
+ON
+categorias.id_tipo = tipos.id]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipo" class="java.lang.String"/>
+	<group name="tipo">
+		<groupExpression><![CDATA[$F{tipo}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<textField>
+					<reportElement style="SubTitle" x="47" y="13" width="506" height="24" forecolor="#000000" uuid="2565e1aa-7df1-4ee0-9f05-1e9e8b4a380a"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Opaque" x="0" y="13" width="36" height="24" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="593a6ff2-81df-4731-814e-664df2b19284"/>
+				</rectangle>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="133" y="30" width="300" height="33" uuid="460c6f0a-8306-4a58-a5d9-3ed7244961ad"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Categorias de Veiculos]]></text>
+			</staticText>
+			<image>
+				<reportElement x="414" y="2" width="139" height="28" uuid="740ac20d-9152-4a7e-99ff-84b694200bdd"/>
+				<imageExpression><![CDATA["C:\\Users\\Fernando\\Documents\\NetBeansProjects\\LProg022014_grupo03\\Projeto 09-09-2014\\src\\Relatorios\\logo.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="0" y="1" width="91" height="69" uuid="c8461508-d313-48d2-a2ab-0821ed17f198"/>
+				<imageExpression><![CDATA["C:\\Users\\Fernando\\Documents\\NetBeansProjects\\LProg022014_grupo03\\Projeto 09-09-2014\\src\\Relatorios\\Lava Jato.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="f798d247-891b-41d4-a3a5-ae2c466c1f38"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="19" width="277" height="15" uuid="a73103ba-3275-418a-af7a-17b21c384e96"/>
+				<text><![CDATA[id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="277" y="19" width="277" height="15" uuid="9edfb250-67a9-4a9b-a5d0-5739dac0a183"/>
+				<text><![CDATA[nome]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="8100b7eb-cbbc-406a-9059-69e139260622"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="277" height="15" uuid="0ff613af-4f3d-40b5-bad1-23d2ccbf7f92"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="277" y="0" width="277" height="15" uuid="c3377501-5cff-46d5-8d43-54aab7148dc3"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="4266eedf-f212-4294-ab2c-ead3a44ea1f0"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="5ec0c9dd-0abd-4d24-927f-9f6489b83d64"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="5ff99b09-6e86-4053-b9f3-806ac072d2b0"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="db8b36b4-eefb-47cf-829c-e819d0c46df3"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
