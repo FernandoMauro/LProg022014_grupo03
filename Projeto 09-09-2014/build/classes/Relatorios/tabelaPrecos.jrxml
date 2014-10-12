@@ -25,17 +25,17 @@
 	<title>
 		<band height="70" splitType="Stretch">
 			<image>
-				<reportElement x="275" y="0" width="300" height="64" uuid="31a17943-86b5-41d0-9a17-c4ad60d112aa"/>
-				<imageExpression><![CDATA["leaf_banner_gray.png"]]></imageExpression>
+				<reportElement x="2" y="0" width="91" height="69" uuid="0338d79e-074d-4422-bd42-5a8d8106d30a"/>
+				<imageExpression><![CDATA["C:\\Users\\Fernando\\Documents\\NetBeansProjects\\LProg022014_grupo03\\Projeto 09-09-2014\\src\\Relatorios\\Lava Jato.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="416" y="1" width="139" height="28" uuid="e2fe46ac-a02f-4d38-a3d2-5eca94b06738"/>
+				<imageExpression><![CDATA["C:\\Users\\Fernando\\Documents\\NetBeansProjects\\LProg022014_grupo03\\Projeto 09-09-2014\\src\\Relatorios\\logo.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement style="Title" x="0" y="13" width="263" height="33" uuid="dc899c19-c4dd-4611-9304-976faddfd62c"/>
+				<reportElement style="Title" x="133" y="37" width="300" height="33" uuid="3cf7e231-4d77-4cad-8748-3c1243546e4b"/>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Leaf Gray Title]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="SubTitle" x="117" y="46" width="157" height="22" uuid="addd2ff3-ff5e-4ee3-bf15-28ca5714a5f4"/>
-				<text><![CDATA[Leaf Gray SubTitle]]></text>
+				<text><![CDATA[Tabela de Preços]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -52,15 +52,15 @@
 			</line>
 			<staticText>
 				<reportElement style="Column header" x="0" y="19" width="185" height="15" uuid="8876f4dc-4b9f-41ae-976d-1d8818502216"/>
-				<text><![CDATA[id]]></text>
+				<text><![CDATA[ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="185" y="19" width="185" height="15" uuid="6889c5bb-3f91-43f2-ad45-a77d8eb20e46"/>
-				<text><![CDATA[nome]]></text>
+				<reportElement style="Column header" x="54" y="19" width="316" height="15" uuid="6889c5bb-3f91-43f2-ad45-a77d8eb20e46"/>
+				<text><![CDATA[SERVIÇO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="370" y="19" width="185" height="15" uuid="5a038be5-3046-4ca5-86a9-d7b09aa7a0e4"/>
-				<text><![CDATA[valor]]></text>
+				<text><![CDATA[VALOR]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -77,7 +77,7 @@
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="185" y="0" width="185" height="15" uuid="2cf81c87-8d25-4d7c-a308-bb591699d543"/>
+				<reportElement style="Detail" x="54" y="0" width="316" height="15" uuid="2cf81c87-8d25-4d7c-a308-bb591699d543"/>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
