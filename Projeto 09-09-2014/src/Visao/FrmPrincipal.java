@@ -278,7 +278,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
         // TODO add your handling code here:
-        FrmOS frm4 = new FrmOS();
+        FrmOs frm4 = new FrmOs();
         frm4.setVisible(true);
     }//GEN-LAST:event_jMenu2MouseClicked
 
