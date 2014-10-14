@@ -47,7 +47,7 @@ public class Relatorios {
 
     public void imprimeRelClientes() {
         try {
-            conecta.executaSql("SELECT clientes.id, clientes.nome, concat(substring(clientes.placa,1,3),'-',substring(clientes.placa,4,7)) as placa, tipos.nome as tipo, categorias.nome as categoria FROM clientes INNER JOIN tipos ON clientes.tipo = tipos.id INNER JOIN categorias ON clientes.categoria = categorias.id ");
+            conecta.executaSql("SELECT clientes.id, clientes.nome, concat(substring(clientes.placa,1,3),'-',substring(clientes.placa,4,7)) as placa, tipos.nome as tipo, categorias.nome as categoria FROM clientes INNER JOIN tipos ON clientes.tipo = tipos.id INNER JOIN categorias ON clientes.categoria = categorias.id order by clientes.nome");
             JRResultSetDataSource relatTipos = new JRResultSetDataSource(conecta.rs);
             JasperPrint jpTipos = JasperFillManager.fillReport("src\\Relatorios\\clientes.jasper", new HashMap(), relatTipos);
             JasperViewer jv = new JasperViewer(jpTipos, false);
