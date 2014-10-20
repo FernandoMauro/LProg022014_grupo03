@@ -7,11 +7,13 @@ package Visao;
 
 import ConectaBanco.ConectaBanco;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import java.text.SimpleDateFormat;
+import static org.hsqldb.HsqlDateTime.dateValue;
 
 /**
  *
@@ -22,6 +24,7 @@ public class FrmOs extends javax.swing.JFrame {
     ConectaBanco conectaCliente = new ConectaBanco();
     ConectaBanco conectaTabelaPrecos = new ConectaBanco();
     SimpleDateFormat dataBrasil = new SimpleDateFormat("dd/MM/yyy");
+    Date data = new Date();
 
     /**
      * Creates new form FrmOsteste
@@ -31,13 +34,14 @@ public class FrmOs extends javax.swing.JFrame {
         conectaCliente.conexao();
         conectaTabelaPrecos.conexao();
         jDate.setEnabled(false);
+        jButtonCancela.setEnabled(false);
         inicio();
     }
 
     public void inicio() {
         try {
             // TODO add your handling code here:
-            jComboServicos.removeAllItems();
+            //jComboServicos.removeAllItems();
             conectaCliente.executaSql("select clientes.id, clientes.nome, "
                     + "clientes.placa, tipos.id, tipos.nome, categorias.id, "
                     + "categorias.nome from clientes "
@@ -48,10 +52,12 @@ public class FrmOs extends javax.swing.JFrame {
             do {
                 jComboCliente.addItem(conectaCliente.rs.getString("nome"));
             } while (conectaCliente.rs.next());
-            preencheConboTabelaPrecos();
+           jButtonCancela.setVisible(false);
+            //preencheConboTabelaPrecos();
         } catch (SQLException ex) {
             Logger.getLogger(FrmOs.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 
     public void localizaRegistro() {
@@ -123,6 +129,7 @@ public class FrmOs extends javax.swing.JFrame {
     private void initComponents() {
 
         jCalendar1 = new com.toedter.calendar.JCalendar();
+        jSplitPane1 = new javax.swing.JSplitPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -136,18 +143,19 @@ public class FrmOs extends javax.swing.JFrame {
         jTextCategoria = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jTextValor = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonAdiciona = new javax.swing.JButton();
+        jButtonSalvar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        jButtonInicio = new javax.swing.JButton();
+        jButtonVoltar = new javax.swing.JButton();
+        jButtonProximo = new javax.swing.JButton();
+        jButtonFim = new javax.swing.JButton();
         jComboCliente = new javax.swing.JComboBox();
         jComboServicos = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
         jDate = new com.toedter.calendar.JDateChooser();
+        jButtonCancela = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ordem de Serviço");
@@ -181,39 +189,42 @@ public class FrmOs extends javax.swing.JFrame {
 
         jTextValor.setEnabled(false);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/add.png"))); // NOI18N
-        jButton1.setToolTipText("Adiciona novo cadastro");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAdiciona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/add.png"))); // NOI18N
+        jButtonAdiciona.setToolTipText("Adiciona novo cadastro");
+        jButtonAdiciona.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonAdicionaActionPerformed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Save_48x48.png"))); // NOI18N
-        jButton2.setToolTipText("Salvar Registro");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Save_48x48.png"))); // NOI18N
+        jButtonSalvar.setToolTipText("Salvar Registro");
+        jButtonSalvar.setEnabled(false);
+        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonSalvarActionPerformed(evt);
             }
         });
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/refresh.png"))); // NOI18N
         jButton3.setToolTipText("Atualizar");
+        jButton3.setEnabled(false);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/delete.png"))); // NOI18N
         jButton4.setToolTipText("Deletar");
+        jButton4.setEnabled(false);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/inicio.png"))); // NOI18N
-        jButton5.setToolTipText("Primeiro Registro");
+        jButtonInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/inicio.png"))); // NOI18N
+        jButtonInicio.setToolTipText("Primeiro Registro");
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/back_1.png"))); // NOI18N
-        jButton6.setToolTipText("Registro Anterior");
+        jButtonVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/back_1.png"))); // NOI18N
+        jButtonVoltar.setToolTipText("Registro Anterior");
 
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/next.png"))); // NOI18N
-        jButton7.setToolTipText(" Próximo Registro");
+        jButtonProximo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/next.png"))); // NOI18N
+        jButtonProximo.setToolTipText(" Próximo Registro");
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/fim.png"))); // NOI18N
-        jButton8.setToolTipText("Último Registro");
+        jButtonFim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/fim.png"))); // NOI18N
+        jButtonFim.setToolTipText("Último Registro");
 
         jComboCliente.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboCliente.setEnabled(false);
@@ -237,12 +248,20 @@ public class FrmOs extends javax.swing.JFrame {
                 jComboServicosPopupMenuWillBecomeInvisible(evt);
             }
             public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                jComboServicosPopupMenuWillBecomeVisible(evt);
             }
         });
 
         jLabel7.setText("Serviço");
 
         jDate.setEnabled(false);
+
+        jButtonCancela.setText("cancelar");
+        jButtonCancela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -255,6 +274,9 @@ public class FrmOs extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonCancela))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -285,40 +307,46 @@ public class FrmOs extends javax.swing.JFrame {
                         .addComponent(jDate, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
+                            .addComponent(jButtonInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonAdiciona))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton2)
+                                .addComponent(jButtonSalvar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton3))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                                .addComponent(jButtonProximo, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButtonFim, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton4)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(562, 562, 562))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jButtonAdiciona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton5)
-                            .addComponent(jButton6)
-                            .addComponent(jButton7)))
-                    .addComponent(jButton8))
+                            .addComponent(jButtonInicio)
+                            .addComponent(jButtonVoltar)
+                            .addComponent(jButtonProximo)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonFim)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -348,7 +376,9 @@ public class FrmOs extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jTextValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(jButtonCancela)
+                .addGap(23, 23, 23))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -356,9 +386,8 @@ public class FrmOs extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -368,7 +397,7 @@ public class FrmOs extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(389, 471));
+        setSize(new java.awt.Dimension(380, 478));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -378,34 +407,96 @@ public class FrmOs extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboClientePopupMenuWillBecomeInvisible
 
     private void jComboClientePopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboClientePopupMenuWillBecomeVisible
-        // TODO add your handling code here:
+       
         jComboCliente.removeAllItems();
         inicio();
     }//GEN-LAST:event_jComboClientePopupMenuWillBecomeVisible
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonAdicionaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionaActionPerformed
         // TODO add your handling code here:
         jComboCliente.setEnabled(true);
         jComboCliente.removeAllItems();
         jComboCliente.addItem("Selecione o Cliente");
-        jDate.setEnabled(true);
         jComboServicos.removeAllItems();
         jComboServicos.setEnabled(true);
         jComboServicos.addItem("Selecione o Serviço");
-        preencheConboTabelaPrecos();
+        jDate.setEnabled(true);
+        //preencheConboTabelaPrecos();
         jTextValor.setEnabled(true);
         jDate.requestFocusInWindow();
-    }//GEN-LAST:event_jButton1ActionPerformed
+        jButtonSalvar.setEnabled(true);
+        jDate.setDate(data);
+        //jTextPlaca.setEditable(true);
+        //jTextTipo.setEditable(true);
+        //jTextCategoria.setEditable(true);
+        jButtonInicio.setEnabled(false);
+        jButtonVoltar.setEnabled(false);
+        jButtonProximo.setEnabled(false);
+        jButtonFim.setEnabled(false);
+        jButtonAdiciona.setEnabled(false);
+        jButtonCancela.setVisible(true);
+        jButtonCancela.setEnabled(true);
+        
+
+
+    }//GEN-LAST:event_jButtonAdicionaActionPerformed
 
     private void jComboServicosPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboServicosPopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         localizaValorPreco(jComboServicos);
     }//GEN-LAST:event_jComboServicosPopupMenuWillBecomeInvisible
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, dataBrasil.format(jDate.getDate()));
-    }//GEN-LAST:event_jButton2ActionPerformed
+        //JOptionPane.showMessageDialog(null, dataBrasil.format(jDate.getDate()));
+        verificaCamposVazios();
+
+    }//GEN-LAST:event_jButtonSalvarActionPerformed
+
+    private void jComboServicosPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboServicosPopupMenuWillBecomeVisible
+        // TODO add your handling code here:
+        jComboServicos.removeAllItems();
+        preencheConboTabelaPrecos();
+    }//GEN-LAST:event_jComboServicosPopupMenuWillBecomeVisible
+
+    private void jButtonCancelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelaActionPerformed
+        jComboCliente.setEnabled(false);
+        jComboCliente.removeAllItems();
+        jComboCliente.addItem("Selecione o Cliente");
+        jComboServicos.removeAllItems();
+        jComboServicos.setEnabled(false);
+        jComboServicos.addItem("Selecione o Serviço");
+        jDate.setEnabled(false);
+        //preencheConboTabelaPrecos();
+        jTextValor.setEnabled(false);        
+        jButtonSalvar.setEnabled(false);
+        jTextPlaca.setEditable(false);
+        jTextTipo.setEditable(false);
+        jTextCategoria.setEditable(false);
+        jButtonInicio.setEnabled(true);
+        jButtonVoltar.setEnabled(true);
+        jButtonProximo.setEnabled(true);
+        jButtonFim.setEnabled(true);
+        jButtonAdiciona.setEnabled(true);
+        jButtonSalvar.setEnabled(false);
+        jButtonCancela.setVisible(false);
+        jButtonCancela.setEnabled(false);
+        
+        
+        
+    }//GEN-LAST:event_jButtonCancelaActionPerformed
+
+    public void verificaCamposVazios() {
+        if (jTextPlaca.getText().equals("")
+                || jTextTipo.getText().equals("")
+                || jTextCategoria.getText().equals("")
+                || jTextValor.getText().equals("")
+                || jComboCliente.getSelectedItem().equals("Selecione o Cliente")
+                || jComboServicos.getSelectedItem().equals("Selecione o Serviço")) {
+            JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios");
+        }
+
+    }
 
     /**
      * @param args the command line arguments
@@ -421,16 +512,21 @@ public class FrmOs extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmOs.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmOs.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmOs.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmOs.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmOs.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmOs.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmOs.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmOs.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -443,14 +539,15 @@ public class FrmOs extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButtonAdiciona;
+    private javax.swing.JButton jButtonCancela;
+    private javax.swing.JButton jButtonFim;
+    private javax.swing.JButton jButtonInicio;
+    private javax.swing.JButton jButtonProximo;
+    private javax.swing.JButton jButtonSalvar;
+    private javax.swing.JButton jButtonVoltar;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JComboBox jComboCliente;
     private javax.swing.JComboBox jComboServicos;
@@ -464,6 +561,7 @@ public class FrmOs extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTextField jTextCategoria;
     private javax.swing.JTextField jTextOS;
     private javax.swing.JTextField jTextPlaca;
